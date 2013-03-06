@@ -1,0 +1,135 @@
+import java.util.Stack;
+
+public abstract class ConnectFourI {
+	protected int BOARD_HEIGHT = 6;
+	protected int BOARD_WIDTH = 7;
+	protected Player[][] board = new Player[BOARD_HEIGHT][BOARD_WIDTH];
+	protected Player x; // The player who moves first
+	protected Player o; // The player who moves second
+	protected Player toMove; // The player whose turn it is to move
+
+	/**
+	 * @return the board width
+	 */
+	public int getWidth() {
+		return BOARD_WIDTH;
+	}
+
+	/**
+	 * @return the board height
+	 */
+	public int getHeight() {
+		return BOARD_HEIGHT;
+	}
+
+	/**
+	 * @return columns representing legal moves.
+	 */
+	public abstract int[] getMoves();
+
+	/**
+	 * @return whether or not the game is over
+	 */
+	public abstract boolean isGameOver();
+
+	/**
+	 * @return a winner, if there is one, otherwise null
+	 */
+	public abstract Player getWinner();
+
+	/**
+	 * Makes a move for the current player to move.
+	 * 
+	 * @param col
+	 * @return true if the move was played, false otherwise
+	 */
+	public abstract boolean makeMove(int col);
+
+	/**
+	 * Undoes the last move
+	 */
+	public abstract void undoMove();
+
+	/**
+	 * @param row
+	 * @param col
+	 * @return the player who owns the piece at (row, col)
+	 */
+	public abstract Player getSquare(int row, int col);
+
+	/**
+	 * Sets the state of the board given a string of (e.g. 'x', 'o', and ' ') in
+	 * row-major order. Treats invalid characters as spaces and ignores excess
+	 * characters.
+	 * 
+	 * @param state
+	 * @throws IllegalArgumentException
+	 *             if (num(x) - num(o)) not in {0, 1}
+	 */
+	public void setState(String state) {
+		int counter = 0;
+		int size = BOARD_WIDTH * BOARD_HEIGHT;
+		this.board = new Player[BOARD_HEIGHT][BOARD_WIDTH];
+		for (int i = 0; i < size; i++) {
+			char sq = state.charAt(i);
+			if (x.getName().equals(sq)) {
+				counter++;
+				this.board[i / BOARD_WIDTH][i % BOARD_WIDTH] = x;
+			} else if (o.getName().equals(sq)) {
+				counter--;
+				this.board[i / BOARD_WIDTH][i % BOARD_WIDTH] = o;
+			}
+		}
+		if (counter == 1) {
+			this.toMove = x;
+		}
+		if (counter == 0) {
+			this.toMove = o;
+		} else
+			throw new IllegalArgumentException();
+	}
+
+	/*
+	 * Returns the string representation of the board state in row-major order,
+	 * using 'x', 'o', and ' ' characters. (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < BOARD_HEIGHT; i++) {
+			for (int j = 0; j < BOARD_WIDTH; j++) {
+				Player sq = this.board[i][j];
+				if (sq != null) {
+					sb.append(sq.toString());
+				} else {
+					sb.append(' ');
+				}
+			}
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * Prints the board.
+	 */
+	public void printBoard() {
+		for (int i = 0; i < BOARD_HEIGHT; i++) {
+			System.out.print('|');
+			for (int j = 0; j < BOARD_WIDTH; j++) {
+				Player sq = this.board[i][j];
+				if (sq != null) {
+					System.out.print(sq.toString() + "|");
+				} else {
+					System.out.print(" |");
+				}
+			}
+			System.out.println();
+		}
+	}
+
+	/**
+	 * @return the player whose turn it is to move
+	 */
+	public abstract Player getToMove();
+}

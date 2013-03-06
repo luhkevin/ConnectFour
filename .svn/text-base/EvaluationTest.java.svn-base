@@ -1,0 +1,65 @@
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+
+public class EvaluationTest {
+	ConnectFourI connect;
+	EvaluationI eval;
+
+	@Before
+	public void setUp() throws Exception {
+	    connect = new ConnectFour();
+	    eval = new EvaluationSolution(connect.x);
+		
+		connect.makeMove(3); //x
+		connect.makeMove(4); //o
+		connect.makeMove(3); //x
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	    connect = null;
+	    eval = null;
+	}
+
+	@Test
+	public void testEvaluateTwo() {
+		assertEquals(eval.evaluate(connect, 0), -4);
+		connect.makeMove(0);
+		assertEquals(eval.evaluate(connect, 0), 4);
+	}
+	
+	@Test
+	public void testEvaluateThree() {
+		connect.makeMove(0);
+		connect.makeMove(3);
+		assertEquals(eval.evaluate(connect, 0), -40);
+	}
+	@Test
+	public void testEvaluateFour() {
+		connect.makeMove(0);
+		connect.makeMove(3);
+		connect.makeMove(2);
+		connect.makeMove(3);
+		assertEquals(eval.evaluate(connect, 3), -1003);
+	}
+	
+	@Test
+	public void testnInARow(){
+		connect.makeMove(1);
+		connect.makeMove(2);
+		connect.makeMove(6);
+		connect.makeMove(2);
+		connect.makeMove(1);
+		connect.makeMove(1);
+		connect.printBoard();
+		assertEquals((eval.nInARow(connect, 2))[0],7);
+		assertEquals((eval.nInARow(connect, 2))[1],1);
+	}
+	
+
+}
+

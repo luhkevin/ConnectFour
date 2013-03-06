@@ -1,0 +1,19 @@
+public class Evaluation implements EvaluationI {
+	Player pl;
+
+	public Evaluation(Player player) {
+		this.pl = player;
+	}
+
+	@Override
+	public int evaluate(ConnectFourI node, int depth) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int[] nInARow(ConnectFourI node, int n) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

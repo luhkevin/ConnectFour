@@ -1,0 +1,60 @@
+import static org.junit.Assert.*;
+
+import java.util.Stack;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class ConnectFourTest {
+
+	ConnectFourI connect = new ConnectFour();
+
+	@Before
+	public void setUp() throws Exception {
+		for (int i = 0; i < 3; i++) {
+			for (int j = i; j < 4; j++) {
+				if (i == 2 && j == 2) {
+					connect.makeMove(4);
+				}
+				connect.makeMove(j);
+			}
+		}
+		for (int i = 0; i < 6; i++) {
+			connect.makeMove(6);
+		}
+		connect.printBoard();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
+	// @Test
+	public void testGetMoves() throws Exception {
+
+	}
+
+	@Test
+	public void testIsGameOver() {
+		connect.makeMove(3);
+		assertTrue(connect.isGameOver());
+		connect.undoMove();
+	}
+
+	@Test
+	public void testGetWinner() {
+		Stack<Integer> stackMoves = new Stack<Integer>();
+		for (int i : connect.getMoves())
+			stackMoves.push(i);
+		for (int i = 0; i <= 5; i++) {
+			assertTrue(stackMoves.contains(i));
+		}
+		assertFalse(stackMoves.contains(6));
+	}
+
+	@Test
+	public void testGetSquare() {
+		assertEquals(connect.getSquare(0, 6).getName(), "o");
+	}
+}

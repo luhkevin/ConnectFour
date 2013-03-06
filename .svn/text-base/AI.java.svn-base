@@ -1,0 +1,29 @@
+public class AI implements AII {
+	EvaluationI ev;
+
+	public AI(EvaluationI ev) {
+		this.ev = ev;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see AII#findMove(ConnectFourI, int)
+	 */
+	@Override
+	public int findMove(ConnectFourI node, int depth) {
+		// TODO Auto-generated method stub
+		return -1;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see AII#negamax(ConnectFourI, int)
+	 */
+	@Override
+	public int negamax(ConnectFourI node, int depth) {
+		// TODO Auto-generated method stub
+		return -1;
+	}
+}
